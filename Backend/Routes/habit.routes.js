@@ -3,6 +3,7 @@ const { createHabit, getAllHabits, getSingleHabit, updateHabit, deleteHabit, mar
 
 const habitRouter = Router()
 
+// Basic Habits routes
 habitRouter.post("/", createHabit)
 
 habitRouter.get("/", getAllHabits)
@@ -13,7 +14,7 @@ habitRouter.put("/:id", updateHabit)
 
 habitRouter.delete("/:id", deleteHabit)
 
-// Habits Tracking
+// Habits Tracking routes
 habitRouter.post("/:id/track", markHabitDone)
 
 habitRouter.get("/:id/history", getHabitHistory)

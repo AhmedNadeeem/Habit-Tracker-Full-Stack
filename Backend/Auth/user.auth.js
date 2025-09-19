@@ -1,18 +1,35 @@
-import { object, string, number, date, InferType } from 'yup';
+import { object, string } from 'yup';
 
-const userSchemaYup = object({
-    username: string().trim.required(),
+const userRegisterSchemaYup = object({
+    username: string().required(),
     email: string().email().required(),
     password: string().required(),
-})
+});
 
-export const validateHabit = async (data) => {
+const userLoginSchemaYup = object({
+    email: string().email().required(),
+    password: string().required(),
+});
+
+export const validateUserRegister = async (data) => {
   try {
-    const values = await userSchemaYup.validate(data, { abortEarly: false });
-    return { values, errors: {} };
+    const values = await userRegisterSchemaYup.validate(data, { abortEarly: false });
+    return { values, errors: null };
   } catch (err) {
     const errors = {};
     err.inner?.forEach(e => (errors[e.path] = e.message));
     return { values: data, errors };
   }
 };
+
+export const validateUserLogin = async (data) => {
+  try {
+    const values = await userLoginSchemaYup.validate(data, { abortEarly: false });
+    return { values, errors: null };
+  } catch (err) {
+    const errors = {};
+    err.inner?.forEach(e => (errors[e.path] = e.message));
+    return { values: data, errors };
+  }
+};
+

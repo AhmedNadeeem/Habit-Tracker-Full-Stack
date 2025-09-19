@@ -1,6 +1,14 @@
 const express = require("express")
 const habitRouter = require("./Routes/habit.routes")
 const userRouter = require("./Routes/user.routes")
+const mongoose = require('mongoose');
+const dotenv = require("dotenv")
+
+dotenv.config()
+
+mongoose.connect(process.env.MONGO_URL)
+.then (() => console.log("Connected to mongoDB!"))
+.catch((err) => console.error(`Failed to connect to mongoDB. Error details: ${err}`));
 
 const app = express()
 
