@@ -5,6 +5,7 @@ const {
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { generateAccessToken, generateRefreshToken, verifyAccessToken, verifyRefreshToken } = require("../Utils/jwt.utils");
 
 const registerUser = async (req, res) => {
   const { values, errors } = await validateUserRegister(req.body);
@@ -14,14 +15,11 @@ const registerUser = async (req, res) => {
   } else {
     const { username, email, password } = values;
     console.log(`name: ${username}, email: ${email}, pass: ${password}`);
-    const saltValue = parseInt(process.env.SALT_ROUNDS);
-    const hashPass = await bcrypt.hash(values.password, saltValue);
-    console.log("Hashed pass: ", hashPass);
     try {
-      const newUser = await User.create({
+      await User.create({
         username: username,
         email: email,
-        password: hashPass,
+        password: password,
       });
       res.status(201).json({ message: "User registered!" });
     } catch (tryErr) {
@@ -29,8 +27,6 @@ const registerUser = async (req, res) => {
         .status(500)
         .json({ error: "Failed to register user!", details: tryErr });
     }
-
-    // console.log("values: ", values)
   }
 };
 
@@ -43,21 +39,18 @@ const loginUser = async (req, res) => {
     const { email, password } = values;
     try {
       const user = await User.find({ email: email });
-      const passCheck = bcrypt.compare(password, user.password);
+      const passCheck = await user.comparePassword(password);
       if (!passCheck)
         return res.status(400).josn({ message: "Incorrect password!" });
-      const token = jwt.sign(
-        {
-          id: user._id,
-          name: user.username,
-          email: user.email,
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: ACCESS_EXPIRES,
-        }
-      );
-      res.status(200).json({ message: "User logged in!", token: token });
+      const accessToken = generateAccessToken( user._id, user.username, user.email );
+      const refreshToken = generateRefreshToken( user._id );
+      user.refreshToken = refreshToken;
+      await user.save();
+      res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: false,
+      });
+      res.status(200).json({ message: "User logged in!", token: accessToken });
     } catch (err) {
       console.error(err);
       res.status(400).json({ message: "Incorrect email. User not found!" });

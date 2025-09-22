@@ -4,19 +4,19 @@ const { createHabit, getAllHabits, getSingleHabit, updateHabit, deleteHabit, mar
 const habitRouter = Router()
 
 // Basic Habits routes
-habitRouter.post("/", createHabit)
+habitRouter.post("/create", createHabit)
 
-habitRouter.get("/", getAllHabits)
+habitRouter.get("/all/:uId", getAllHabits)
 
-habitRouter.get("/:id", getSingleHabit)
+habitRouter.get("/habit/:hId", getSingleHabit)
 
-habitRouter.put("/:id", updateHabit)
+habitRouter.put("/update", updateHabit)
 
-habitRouter.delete("/:id", deleteHabit)
+habitRouter.delete("/delete/:hId", deleteHabit)
 
 // Habits Tracking routes
-habitRouter.post("/:id/track", markHabitDone)
+habitRouter.post("/done/:hId", markHabitDone)
 
-habitRouter.get("/:id/history", getHabitHistory)
+habitRouter.get("/history/:hId", getHabitHistory)
 
 module.exports = habitRouter;
