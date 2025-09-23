@@ -1,5 +1,6 @@
 const { validateHabit } = require("../Auth/habit.auth");
 const Habit = require("../models/habit.model")
+const HabitTrack = require("../models/habitTrack.model")
 
 const createHabit = async (req,res)=> {
     const { values, errors } = await validateHabit(req.body);
@@ -58,10 +59,58 @@ const updateHabit = async (req,res)=> {
     }
 }
 
-const deleteHabit = (req,res)=> {}
+const deleteHabit = async(req,res)=> {
+    try {
+        const habitId = req.params.hId;
+        if(!habitId) return res.status(401).json({ message: "Habit id is required" })
 
-const markHabitDone = (req,res)=> {}
+        const deletedHabit = await Habit.findByIdAndDelete(habitId);
+        return res.status(200).json({ message: "Habit deleted", habit: deletedHabit })
+    } catch (error) {
+        return res.status(500).json({ message: "Failed to delete habit", details: error })
+    }
+}
 
-const getHabitHistory = (req,res)=> {}
+const markHabitDone = async (req,res) => {
+    try {
+        const habitId = req.params.hId;
+        if(!habitId) return res.status(401).json({ message: "Habit id required" });
+
+        const { date, status } = req.body;
+        if(!date || !status) return res.status(401).json({ message: "Date and status required" });
+
+        const habitTrackPrev = await HabitTrack.findOne({ habitId: habitId, date: date });
+        if(habitTrackPrev){
+            habitTrackPrev.status = status,
+            habitTrackPrev.save();
+
+            return res.status(200).json({ message: "Habit status changed", updatedHabit: habitTrackPrev })
+        } else {
+            const newHabitTrack = await HabitTrack.create({
+                habitId: habitId,
+                date: date,
+                status: status,
+            });
+            return res.status(201).json({ message: "Habit track marked", habitTrack: newHabitTrack })
+        }
+
+    } catch (error) {
+        return res.status(500).json({ message: "Failed to mark habit", details: error })
+    }
+}
+
+const getHabitHistory = async (req,res)=> {
+    try {
+        const habitId = req.params.hId;
+        if(!habitId) return res.status(400).json({ message: "Habit id required" });
+
+        const habitHistory = await HabitTrack.find({ habitId: habitId });
+        if(!habitHistory) return res.status(400).json({ message: "Incorrect habit id" });
+
+        return res.status(200).json({ message: "Habit history found", habitHistory: habitHistory })
+    } catch (error) {
+        return res.status(500).json({ message: "Failed to get habit history", details: error })
+    }
+}
 
 module.exports = { createHabit, getAllHabits, getSingleHabit, updateHabit, deleteHabit, markHabitDone, getHabitHistory }

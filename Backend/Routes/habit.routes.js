@@ -1,22 +1,22 @@
-const { Router } = require("express")
-const { createHabit, getAllHabits, getSingleHabit, updateHabit, deleteHabit, markHabitDone, getHabitHistory } = require("../Controllers/habits.controllers")
+const { Router } = require("express");
+const { createHabit, getAllHabits, getSingleHabit, updateHabit, deleteHabit, markHabitDone, getHabitHistory } = require("../Controllers/habits.controllers");
 
-const habitRouter = Router()
+const habitRouter = Router();
 
 // Basic Habits routes
-habitRouter.post("/create", createHabit)
+habitRouter.post("/create", createHabit);
 
-habitRouter.get("/all/:uId", getAllHabits)
+habitRouter.get("/all/:uId", getAllHabits);
 
-habitRouter.get("/habit/:hId", getSingleHabit)
+habitRouter.get("/habit/:hId", getSingleHabit);
 
-habitRouter.put("/update", updateHabit)
+habitRouter.put("/update", updateHabit);
 
-habitRouter.delete("/delete/:hId", deleteHabit)
+habitRouter.delete("/delete/:hId", deleteHabit);
 
 // Habits Tracking routes
-habitRouter.post("/done/:hId", markHabitDone)
+habitRouter.post("/mark/:hId", markHabitDone);
 
-habitRouter.get("/history/:hId", getHabitHistory)
+habitRouter.get("/history/:hId", getHabitHistory);
 
 module.exports = habitRouter;
