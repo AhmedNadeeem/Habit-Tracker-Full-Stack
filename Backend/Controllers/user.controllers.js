@@ -3,8 +3,6 @@ const {
   validateUserLogin,
 } = require("../Auth/user.auth");
 const User = require("../models/user.model");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 const { generateAccessToken, generateRefreshToken, verifyAccessToken, verifyRefreshToken } = require("../Utils/jwt.utils");
 
 const registerUser = async (req, res) => {
@@ -62,11 +60,8 @@ const loginUser = async (req, res) => {
 
 const refreshToken = async(req,res)=>{
   try {
-    const token = req.cookies.refreshToken;
-    if(!token) return res.status(401).json({ message: "No refresh token" });
-
-    const data = verifyRefreshToken(token);
-    const user = await User.findById(data.usreId);
+    const userData = req.user;
+    const user = await User.findById(userData.usreId);
 
     if(!user || user.refreshToken !== token) {
       return res.status(401).json({ message: "Invalid refresh token!" });
@@ -95,11 +90,8 @@ const refreshToken = async(req,res)=>{
 
 const logout = async(req,res)=>{
   try {
-    const token = req.cookies.refreshToken;
-    if(!token) return res.statsu(204).json({ messsage: "No refresh token" });
-
-    const data = verifyRefreshToken(token);
-    const user = await User.findById(data.userId);
+    const userData = req.user;
+    const user = await User.findById(userData.userId);
 
     if(user){
       user.refreshToken = null;
