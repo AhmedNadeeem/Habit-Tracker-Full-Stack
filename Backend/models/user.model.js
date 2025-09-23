@@ -32,8 +32,8 @@ userSchema.pre("save", async function(next){
     this.password = await bcrypt.hash(this.password, saltValue);
 })
 
-userSchema.methods.comparePassword = function(password) {
-    return bcrypt.compare(password, this.password);
+userSchema.methods.comparePassword = async function(password) {
+    return await bcrypt.compare(password, this.password);
 }
 
 module.exports = model("User", userSchema)
