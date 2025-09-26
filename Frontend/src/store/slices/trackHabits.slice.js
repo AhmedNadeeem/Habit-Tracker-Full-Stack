@@ -12,7 +12,7 @@ export const trackHabitSlice = createSlice({
     changeStatus: (state, actions) => {
       const { filterHabitId, date, status } = actions.payload;
       const normalDate = normalizeToDay(date);
-      const filterHabit = state.filter(
+      let filterHabit = state.filter(
         (habit) =>
           habit.habitId == filterHabitId && normalDate == normalDate(habit.date)
       );

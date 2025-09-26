@@ -1,5 +1,4 @@
-import { BrowserRouter, Routse, Route } from "react-router-dom"
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Layout from "./Layout"
 import Dashboard from "./pages/Dashboard"
 import Habits from "./pages/Habits"
@@ -12,11 +11,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout/>}>
-          <Router element={Dashboard} />
-          <Router path="/login" element={Login} />
-          <Router path="/register" element={Register} />
-          <Router path="/habits" element={Habits} />
-          <Router path="/habits/stats" element={HabitsStats} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/habits" element={<Habits />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/habits/stats" element={<HabitsStats />} />
         </Route>
       </Routes>
     </BrowserRouter>
