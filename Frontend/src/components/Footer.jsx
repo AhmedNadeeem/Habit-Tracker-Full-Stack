@@ -16,14 +16,14 @@ function Footer() {
       </div>
 
       <div className='flex gap-4 justify-center items-center pb-12'>
-        <a className='text-white font-thin hover:underline' href="">Home</a>
-        <a className='text-white font-thin hover:underline' href="">Dashboard</a>
-        <a className='text-white font-thin hover:underline' href="">Habits</a>
-        <a className='text-white font-thin hover:underline' href="">Text</a>
+        <a className='text-white font-thin hover:underline hover:text-[#ff9100]' href="">Home</a>
+        <a className='text-white font-thin hover:underline hover:text-[#ff9100]' href="">Dashboard</a>
+        <a className='text-white font-thin hover:underline hover:text-[#ff9100]' href="">All Habits</a>
+        <a className='text-white font-thin hover:underline hover:text-[#ff9100]' href="">Stats</a>
       </div>
 
       <div className='flex justify-center items-center bg-black py-3'>
-        <p className='text-white font-thin text-sm tracking-widest'>Made with <span className='text-red-500'>&hearts;</span> by Ahmed Gondal</p>
+        <p className='text-white font-thin text-sm tracking-widest'>Made with <span className='text-[#ff9100]'>&hearts;</span> by Ahmed Gondal</p>
       </div>
 
     </footer>

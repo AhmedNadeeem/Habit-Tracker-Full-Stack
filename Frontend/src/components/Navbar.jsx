@@ -11,31 +11,43 @@ import {
 
 function Navbar() {
   return (
-    <div className="w-ful flex flex-row justify-center items-center py-2 bg-amber-600">
+    <div className="w-ful flex flex-row justify-center items-center py-2 bg-amber-600 bg-gray-900">
     <NavigationMenu>
       <NavigationMenuList>
 
         <NavigationMenuItem>
             <NavigationMenuLink>
-              <a className="md:text-lg px-2 font-normal" href="/">Home</a>
+              <a className="md:text-lg px-2 font-normal text-white" href="/">Home</a>
             </NavigationMenuLink>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
             <NavigationMenuLink>
-              <a className="md:text-lg px-2 font-normal" href="/dashboard">Dashboard</a>
+              <a className="md:text-lg px-2 font-normal text-white" href="/dashboard">Dashboard</a>
             </NavigationMenuLink>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
             <NavigationMenuLink>
-              <a className="md:text-lg px-2 font-normal" href="/habits">All Habits</a>
+              <a className="md:text-lg px-2 font-normal text-white" href="/habits">All Habits</a>
             </NavigationMenuLink>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
             <NavigationMenuLink>
-              <a className="md:text-lg px-2 font-normal" href="/login">Login</a>
+              <a className="md:text-lg px-2 font-normal text-white" href="/stats">Stats</a>
+            </NavigationMenuLink>
+        </NavigationMenuItem>
+        
+        <NavigationMenuItem>
+            <NavigationMenuLink>
+              <a className="md:text-lg px-2 font-normal text-white" href="/login">Login</a>
+            </NavigationMenuLink>
+        </NavigationMenuItem>
+        
+        <NavigationMenuItem>
+            <NavigationMenuLink>
+              <a className="md:text-lg px-2 font-normal text-white" href="/register">Register</a>
             </NavigationMenuLink>
         </NavigationMenuItem>
 
