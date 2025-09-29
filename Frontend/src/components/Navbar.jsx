@@ -1,12 +1,8 @@
 import {
   NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 
 function Navbar() {
@@ -41,13 +37,7 @@ function Navbar() {
         
         <NavigationMenuItem>
             <NavigationMenuLink>
-              <a className="md:text-lg px-2 font-normal text-white" href="/login">Login</a>
-            </NavigationMenuLink>
-        </NavigationMenuItem>
-        
-        <NavigationMenuItem>
-            <NavigationMenuLink>
-              <a className="md:text-lg px-2 font-normal text-white" href="/register">Register</a>
+              <a className="md:text-lg px-2 font-normal text-white" href="/login">Register/Login</a>
             </NavigationMenuLink>
         </NavigationMenuItem>
 

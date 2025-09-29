@@ -7,10 +7,8 @@ const cors = require("cors");
 
 dotenv.config();
 
-const frontendUrl = process.env.FRONTEND_URL;
-
 const corsOptions = {
-  origin: frontendUrl,
+  origin: process.env.FRONTEND_URL,
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
