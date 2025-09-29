@@ -7,7 +7,7 @@ import {
 
 function Navbar() {
   return (
-    <div className="w-ful flex flex-row justify-center items-center py-2 bg-amber-600 bg-gray-900">
+    <div className="w-ful flex flex-row justify-center items-center py-2 bg-gray-900">
     <NavigationMenu>
       <NavigationMenuList>
 
