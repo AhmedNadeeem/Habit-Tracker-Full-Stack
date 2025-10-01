@@ -38,7 +38,7 @@ const loginUser = async (req, res) => {
     try {
       const user = await User.findOne({ email: email });
       if (!user || !await user.comparePassword(password))
-        return res.status(400).josn({ message: "Incorrect password!" });
+        return res.status(400).json({ message: "Incorrect credentials! Incorrect password or email!" });
 
       const accessToken = generateAccessToken( user._id, user.username, user.email );
       const refreshToken = generateRefreshToken( user._id );
@@ -50,7 +50,17 @@ const loginUser = async (req, res) => {
       httpOnly: true,
       secure: false,
       });
-      res.status(200).json({ message: "User logged in!", accessToken: accessToken });
+      res.status(200).json({ 
+        message: "User logged in!", 
+        accessToken: accessToken, 
+        refreshToken: refreshToken,
+        user: 
+             {
+              username: user.username,
+              email: user.email,
+              id: user._id,
+             } 
+      }); 
     } catch (err) {
       console.error(err);
       res.status(400).json({ message: "Incorrect email. User not found!" });

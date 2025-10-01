@@ -6,7 +6,7 @@ const createHabit = async (req,res)=> {
     const { values, errors } = await validateHabit(req.body);
     if (errors) {
         console.error(errors)
-        return res.status(400),json({ message: "Bad credentials.", details: errors});
+        return res.status(400).json({ message: "Bad credentials.", details: errors});
     }
     console.log(values);
     const { userId, title, frequency } = values;
