@@ -15,7 +15,6 @@ export const habitSlice = createSlice({
         status: false,
       }));
       state = [...statefulHabits];
-      return true;
     },
     addHabit: (state, actions) => {
       const newHabit = actions.payload;
@@ -24,7 +23,6 @@ export const habitSlice = createSlice({
         state: false,
       };
       state = state.push(newHabit);
-      return true;
     },
     updateHabit: (state, actions) => {
       const updatedHabit = actions.payload;
@@ -33,7 +31,6 @@ export const habitSlice = createSlice({
       );
       filteredHabits.push(updatedHabit);
       state = [...filteredHabits];
-      return true;
     },
     deleteHabit: (state, actions) => {
       const deleteHabitId = actions.payload;
@@ -41,7 +38,6 @@ export const habitSlice = createSlice({
         (habit) => habit._id != deleteHabitId
       );
       state = [...filteredHabits];
-      return true;
     },
   },
 });

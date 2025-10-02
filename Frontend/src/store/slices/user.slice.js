@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const userState = localStorage.getItem("userLocal")
+
 const initialState = {
-  user: {
-    name: "Ahmed"
-  },
+  user: userState ? JSON.parse(userState) : {},
 };
 
 export const userSlice = createSlice({
@@ -13,12 +13,10 @@ export const userSlice = createSlice({
     login: (state, action) => {
       const { user, accessToken, refreshToken } = action.payload;
       state.user = { user, accessToken, refreshToken};
-      console.log("User saved", state.user);
-      return true;
+      localStorage.setItem("userLocal", JSON.stringify(state.user))
     },
     logout: (state) => {
       state = {};
-      return true;
     },
   },
 });

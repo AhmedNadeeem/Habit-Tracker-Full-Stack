@@ -4,8 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Toaster, toast } from "react-hot-toast";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from '../store/slices/user.slice';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -13,12 +14,7 @@ const Login = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-
-  const userDataFromSlice = useSelector((state) => state.user.user);
-
-  const getUser = () => {
-    console.log(userDataFromSlice)
-  }
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -44,11 +40,12 @@ const Login = () => {
             const payload = { user, accessToken, refreshToken }
             dispatch(login(payload))
             
-            console.log(payload)
-            toast.success("User logged In!");
+            toast.success("User logged In! Redirecting!");
+            setTimeout(()=> navigate("/"), 1000);
+            
           }) 
           .catch((error) => {
-            const errorMsg = (error.response.data.message)
+            const errorMsg = (error.response?.data?.message)
             console.error(errorMsg);
             toast.error(errorMsg);
           })
@@ -99,9 +96,6 @@ const Login = () => {
 
       <Button onClick={loginUser} className="mt-4">
         Login
-      </Button>
-      <Button onClick={getUser} className="ml-4 mt-4">
-        Get user
       </Button>
     </div>
   );

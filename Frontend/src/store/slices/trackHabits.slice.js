@@ -30,7 +30,6 @@ export const trackHabitSlice = createSlice({
           habit.habitId != filterHabitId && normalDate != normalDate(habit.date)
       );
       otherHabits.push(filterHabit);
-      return true;
     },
   },
 });

@@ -3,6 +3,7 @@ import FacebbokIcon from "../assets/facebook.png";
 import GithubIcon from "../assets/github.png";
 import GmailIcon from "../assets/gmail.png";
 import InstagramIcon from "../assets/instagram.png";
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -16,10 +17,10 @@ function Footer() {
       </div>
 
       <div className='flex gap-4 justify-center items-center pb-12'>
-        <a className='text-white font-thin hover:underline hover:text-[#ff9100]' href="">Home</a>
-        <a className='text-white font-thin hover:underline hover:text-[#ff9100]' href="">Dashboard</a>
-        <a className='text-white font-thin hover:underline hover:text-[#ff9100]' href="">All Habits</a>
-        <a className='text-white font-thin hover:underline hover:text-[#ff9100]' href="">Stats</a>
+        <Link className='text-white font-thin hover:underline hover:text-[#ff9100]' to="/">Home</Link>
+        <Link className='text-white font-thin hover:underline hover:text-[#ff9100]' to="/dashboard">Dashboard</Link>
+        <Link className='text-white font-thin hover:underline hover:text-[#ff9100]' to="/habits">All Habits</Link>
+        <Link className='text-white font-thin hover:underline hover:text-[#ff9100]' to="/stats">Stats</Link>
       </div>
 
       <div className='flex justify-center items-center bg-black py-3'>
