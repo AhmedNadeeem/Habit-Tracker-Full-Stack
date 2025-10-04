@@ -30,12 +30,6 @@ function Navbar() {
 
         <NavigationMenuItem>
             <NavigationMenuLink>
-              <Link className="md:text-lg px-2 font-normal text-white" to="/dashboard">Dashboard</Link>
-            </NavigationMenuLink>
-        </NavigationMenuItem>
-
-        <NavigationMenuItem>
-            <NavigationMenuLink>
               <Link className="md:text-lg px-2 font-normal text-white" to="/habits">All Habits</Link>
             </NavigationMenuLink>
         </NavigationMenuItem>

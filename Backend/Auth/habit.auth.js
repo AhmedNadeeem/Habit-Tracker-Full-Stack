@@ -3,6 +3,8 @@ import { object, string } from "yup";
 const habitYupSchema = object({
     userId: string().required(),
     title: string().required(),
+    description: string().required(),
+    icon: string().required(),
     frequency: string().required(),
 })
 

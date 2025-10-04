@@ -3,7 +3,6 @@ import Layout from "./Layout"
 import Dashboard from "./pages/Dashboard"
 import Habits from "./pages/Habits"
 import Auth from "./pages/AuthPage"
-import Home from "./pages/Home"
 import Stats from "./pages/Stats"
 
 function App() {
@@ -11,8 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout/>}>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/stats" element={<Stats />} />
           <Route path="/habits" element={<Habits />} />
           <Route path="/auth/:type" element={<Auth />} />

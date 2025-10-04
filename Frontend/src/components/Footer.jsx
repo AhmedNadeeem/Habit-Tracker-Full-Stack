@@ -18,7 +18,6 @@ function Footer() {
 
       <div className='flex gap-4 justify-center items-center pb-12'>
         <Link className='text-white font-thin hover:underline hover:text-[#ff9100]' to="/">Home</Link>
-        <Link className='text-white font-thin hover:underline hover:text-[#ff9100]' to="/dashboard">Dashboard</Link>
         <Link className='text-white font-thin hover:underline hover:text-[#ff9100]' to="/habits">All Habits</Link>
         <Link className='text-white font-thin hover:underline hover:text-[#ff9100]' to="/stats">Stats</Link>
       </div>

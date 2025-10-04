@@ -9,11 +9,11 @@ const createHabit = async (req,res)=> {
         return res.status(400).json({ message: "Bad credentials.", details: errors});
     }
     console.log(values);
-    const { userId, title, frequency } = values;
-    console.log(`Id: ${userId}, Title: ${title}, Freq: ${frequency}`);
+    const { userId, title, frequency, icon, description } = values;
+    console.log(`Id: ${userId}, Title: ${title}, description: ${description}, Freq: ${frequency}, icon: ${icon}`);
     try {
         const newHabit = await Habit.create({
-            userId, title, frequency
+            userId, title, description, frequency, icon
         });
         return res.status(201).json({ message: "Habit created!", habit: newHabit })
     } catch (error) {

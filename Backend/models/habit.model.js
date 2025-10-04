@@ -11,10 +11,20 @@ const habitSchema = new Schema({
         trim: true,
         required: true,
     },
+    description:{
+        type: String,
+        trim: true,
+        required: true,
+    },
     frequency: {
         type: String,
         enum: ["daily", "weekly", "monthly"],
         required: true
+    },
+    icon: {
+        type: String,
+        enum: ["idea","work","study","art","entertainment","finance","health","home","meditation","social","sports"],
+        required: true,
     },
 },
 {
