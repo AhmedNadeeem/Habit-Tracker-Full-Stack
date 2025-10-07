@@ -81,7 +81,7 @@ function Navbar() {
                     <DialogHeader>
                       <DialogTitle>New habit:</DialogTitle>
                       </DialogHeader>
-                    <HabitDialog btnText={"Add"} title={""} description={""} frequency={""} icon={""} />
+                    <HabitDialog btnText={"Add"} title={""} description={""} frequency={""} icon={""} habitId={""} />
                   </DialogContent>
                 </Dialog>
               </NavigationMenuLink>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardAction,
@@ -29,6 +29,9 @@ import MeditationIcon from "../assets/meditation.png"
 import SocialIcon from "../assets/social.png"
 import SportsIcon from "../assets/sports.png"
 import HabitDialog from '../components/HabitDialog';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { toast, Toaster } from "react-hot-toast";
 
 const icons = {
   idea: IdeaIcon,
@@ -44,42 +47,97 @@ const icons = {
   sports: SportsIcon
 }
 
-const colors = [
-  "bg-yellow-200", "bg-purple-300", "bg-cyan-200", "bg-fuchsia-200", "bg-lime-300"
-]
+export default function Habits() {
+  const [habits, setHabits] = useState([]);
+  const userData = useSelector(state => state.user.user);
+  
+  useEffect(() => {
+    const userId = userData?.user["userId"];
+    axios.get(`http://localhost:8000/api/v1/habits/all/${userId}`)
+    .then((response)=> {
+      console.log(response.data.habits);
+      setHabits(response.data.habits);
+      console.log(habits);
 
-function Habits() {
+    })
+    .catch((error)=>{
+      console.error(error);
+      setHabits(false);
+    })
+    .finally(()=> {
+      console.log("Finished")
+    })
+  }, [setHabits])
+
+  const deleteHabit = (habitId) => {
+    console.log(habitId)
+    try {
+      if(habitId.length > 0 ){
+        axios.delete(`http://localhost:8000/api/v1/habits/delete/${habitId}`)
+        .then((response)=> {
+          console.log(response.data.message)
+          const msg = (response.data.message)
+          toast.success(msg)
+        })
+        .catch((error)=> {
+          console.error(error)
+        })
+        .finally(()=> {
+          console.log("Finished")
+          setTimeout(()=> 
+            window.location.reload()
+          , 1500)
+        })
+
+      }
+    } catch (error) {
+      
+    }
+  }
+
   return (
     <div className='min-h-screen bg-black px-20 py-3'>
+      <Toaster />
       <h1 className='text-white text-6xl uppercase font-bold text-center p-3 mb-6'>All Habits</h1>
 
-      <Card className="bg-gray-600 w-[50%] max-w-md border-0">
-        <CardHeader>
-          <div className='flex w-full justify-between px-2 items-start'>
-            <div>
-              <CardTitle className="text-black text-lg font-bold mt-1">Habit name</CardTitle>
-              <CardDescription className="text-gray-900 text-lg">Habit description | Frequency</CardDescription>
-            </div>
-            <img className='w-10' src={icons["idea"]} alt="Habit icon" />
-          </div>
-        </CardHeader>
-        <CardFooter className="flex flex-col gap-2">
+      <div className='flex justify-between flex-wrap items-center'>
 
-          <Dialog>
-            <DialogTrigger className="bg-[#ff9100] hover:bg-[#dd7e00] w-full py-2 border-0 rounded-lg cursor-pointer">Edit</DialogTrigger>
-            <DialogContent className="bg-gray-500 border-0">
-              <DialogHeader>
-                <DialogTitle>Edit habit:</DialogTitle>
-                </DialogHeader>
-              <HabitDialog btnText={"Edit"} title={"Title"} description={"Description"} frequency={"Frequency"} icon={"Icon"} />
-            </DialogContent>
-          </Dialog>
+        {habits.length > 0 ? habits.map((habit) => (
+      
+          <Card key={habit._id} className="bg-gray-600 mb-8 flex-1 min-w-[47%] max-w-md border-0">
+            <CardHeader>
+              <div className='flex w-full justify-between px-2 items-start'>
+                <div>
+                  <CardTitle className="text-black text-lg font-bold mt-1">{habit.title}</CardTitle>
+                  <CardDescription className="text-gray-900 text-lg">{habit.description} | {habit.frequency}</CardDescription>
+                </div>
+                <img className='w-10' src={icons[habit.icon]} alt="Habit icon" />
+              </div>
+            </CardHeader>
+            <CardFooter className="flex flex-col gap-2">
 
-          <Button className="w-full bg-red-600 hover:bg-red-700 cursor-pointer">Delete</Button>
-        </CardFooter>
-      </Card>
+              <Dialog>
+                <DialogTrigger className="bg-[#ff9100] hover:bg-[#dd7e00] w-full py-2 border-0 rounded-lg cursor-pointer">Edit</DialogTrigger>
+                <DialogContent className="bg-gray-500 border-0">
+                  <DialogHeader>
+                    <DialogTitle>Edit habit:</DialogTitle>
+                    </DialogHeader>
+                  <HabitDialog btnText={"Edit"} title={habit.title} description={habit.description} frequency={habit.frequency} icon={habit.icon} habitId={habit._id}/>
+                </DialogContent>
+              </Dialog>
+
+              <Button onClick={()=> deleteHabit(habit._id)} className="w-full text-white bg-gray-800 hover:bg-gray-900 cursor-pointer">
+                Delete
+              </Button>
+            </CardFooter>
+          </Card>
+
+        ))
+        : 
+        <h2 className='text-center w-full text-3xl text-white'>No habits to show :(</h2>
+        }
+      </div>
+
     </div>
   )
 }
-
-export default Habits

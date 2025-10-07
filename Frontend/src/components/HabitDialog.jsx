@@ -25,13 +25,10 @@ import SocialIcon from "../assets/social.png"
 import SportsIcon from "../assets/sports.png"
 import axios from "axios"
 import { Toaster, toast } from "react-hot-toast";
-import { useNavigate } from 'react-router-dom';
 
-
-export default function HabitDialog({btnText, title, description, frequency, icon}) {
+export default function HabitDialog({btnText, title, description, frequency, icon, habitId}) {
   const userDetails = useSelector(state => state.user.user);
   const userId = userDetails["user"]["userId"] || "";
-  const navigate = useNavigate();
     const [habit, setHabit] = React.useState({
         title: "",
         description: "",
@@ -43,6 +40,7 @@ export default function HabitDialog({btnText, title, description, frequency, ico
     useEffect(()=> {
       setHabit(
         { 
+          habitId: habitId,
           userId: userId,
           title: title,
           description: description,
@@ -60,6 +58,45 @@ export default function HabitDialog({btnText, title, description, frequency, ico
             headers: { "Content-Type": "application/json" },
           })
           .then((response) => {
+            setLoading(true);
+            const msg = response.data.message;
+            toast.success(msg)
+
+          })
+          .catch((error)=> {
+            const errorMsg = (error.response?.data?.message)
+            console.error(errorMsg);
+            toast.error(errorMsg);
+          })
+          .finally(()=> {
+            setHabit({
+              habitId: habitId,
+              title: "",
+              description: "",
+              frequency: "",
+              icon: "",
+            })
+            setTimeout(()=> {
+              setLoading(false);
+              // window.location.reload();
+            }, 2000)
+          })
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to add habit")
+      }
+    }
+
+    const editHabit = () => {
+      try {
+        if(habit.title.length > 0 && habit.description.length > 0 && habit.frequency.length > 0 && habit.icon.length > 0){
+          axios.put("http://localhost:8000/api/v1/habits/update", habit, {
+            withCredentials: true,
+            headers: { "Content-Type": "application/json" },
+          })
+          .then((response) => {
+            setLoading(true);
             const msg = response.data.message;
             console.log(msg);
             toast.success(msg)
@@ -78,14 +115,15 @@ export default function HabitDialog({btnText, title, description, frequency, ico
               frequency: "",
               icon: "",
             })
+            setLoading(false);
+            window.location.reload();
           })
         }
       } catch (error) {
-        
+        console.error(error);
+        toast.error("Failed to add habit")
       }
     }
-
-    const editHabit = () => {}
 
   return (
     <div className="bg-gray-900 p-4 py-6 rounded-lg mt-1">
@@ -189,10 +227,15 @@ export default function HabitDialog({btnText, title, description, frequency, ico
       </div>
 
 
-        
-      <Button onClick={addNewHabit}  className="mt-4 w-full">
-        {btnText}
-      </Button>
-    </div>
+      {btnText == "Add" ? 
+        <Button onClick={addNewHabit}  className="mt-4 w-full">
+          {btnText}
+        </Button>
+      :    
+        <Button onClick={editHabit}  className="mt-4 w-full">
+          {btnText}
+        </Button>
+      }  
+  </div>
   );
 };

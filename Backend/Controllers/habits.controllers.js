@@ -45,11 +45,16 @@ const getSingleHabit = async (req,res)=> {
 }
 
 const updateHabit = async (req,res)=> {
-    const { _id, title, frequency } = req.body;
+    const { habitId, title, description, frequency, icon } = req.body;
     try {
         const updateHabit = await Habit.findByIdAndUpdate(
-            _id,
-            { title: title, frequency: frequency },
+            habitId,
+            { 
+                title: title, 
+                description: description,
+                frequency: frequency,
+                icon: icon
+            },
             { new: true }
         );
         if(!updateHabit) return res.status(400).json({ message: "Bad credentials. Wrong habit id." });
