@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DayCard from '../components/DayCard'
 import { Progress } from "@/components/ui/progress"
 import HabitCard from '../components/HabitCard';
@@ -9,18 +9,20 @@ const colors = [
 
 function Dashboard() {
   const [progress, setProgress] = useState(25);
+  const [todayDate, setTodayDate] = useState("");
+
+  useEffect(()=> {
+    let date = new Date();
+    date = date.toString().split(" ").slice(0, 4).join(" ");
+    console.log(date)
+    setTodayDate(date);
+  }, [])
   
   return (
     <div className='text-4xl bg-black min-h-screen flex flex-col items-center py-8 px-6'>
 
-      <div className='flex gap-14'>
-        <DayCard cardBg={"bg-[#ff9100]"} cardTextColor={"text-black"} cardDestination={"/"} date={2} day={"Mon"} />
-        <DayCard cardBg={"bg-[#ff9100]"} cardTextColor={"text-black"} cardDestination={"/"} date={3} day={"Mon"} />
-        <DayCard cardBg={"bg-[#ff9100]"} cardTextColor={"text-black"} cardDestination={"/"} date={4} day={"Mon"} />
-        <DayCard cardBg={"bg-[#ff9100]"} cardTextColor={"text-black"} cardDestination={"/"} date={5} day={"Mon"} />
-        <DayCard cardBg={"bg-[#ff9100]"} cardTextColor={"text-black"} cardDestination={"/"} date={6} day={"Mon"} />
-        <DayCard cardBg={"bg-[#ff9100]"} cardTextColor={"text-black"} cardDestination={"/"} date={7} day={"Mon"} />
-        <DayCard cardBg={"bg-[#ff9100]"} cardTextColor={"text-black"} cardDestination={"/"} date={8} day={"Mon"} />
+      <div >
+        <DayCard dateProp={todayDate} />
       </div>
 
       <div className='bg-gray-900 min-w-full flex justify-between px-15 py-10 mt-10 rounded-2xl'>
