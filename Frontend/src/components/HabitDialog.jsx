@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { useSelector } from 'react-redux';
 import {
   Select,
   SelectContent,
@@ -22,8 +23,15 @@ import HomeIcon from "../assets/home.png"
 import MeditationIcon from "../assets/meditation.png"
 import SocialIcon from "../assets/social.png"
 import SportsIcon from "../assets/sports.png"
+import axios from "axios"
+import { Toaster, toast } from "react-hot-toast";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function HabitDialog({btnText, title, description, frequency, icon}) {
+  const userDetails = useSelector(state => state.user.user);
+  const userId = userDetails["user"]["userId"] || "";
+  const navigate = useNavigate();
     const [habit, setHabit] = React.useState({
         title: "",
         description: "",
@@ -34,16 +42,54 @@ export default function HabitDialog({btnText, title, description, frequency, ico
 
     useEffect(()=> {
       setHabit(
-        { title: title,
+        { 
+          userId: userId,
+          title: title,
           description: description,
           frequency: frequency,
           icon: icon
-         }
+        }
       )
     }, [])
 
+    const addNewHabit = () => {
+      try {
+        if(habit.title.length > 0 && habit.description.length > 0 && habit.frequency.length > 0 && habit.icon.length > 0){
+          axios.post("http://localhost:8000/api/v1/habits/create", habit, {
+            withCredentials: true,
+            headers: { "Content-Type": "application/json" },
+          })
+          .then((response) => {
+            const msg = response.data.message;
+            console.log(msg);
+            toast.success(msg)
+
+          })
+          .catch((error)=> {
+            const errorMsg = (error.response?.data?.message)
+            console.error(errorMsg);
+            toast.error(errorMsg);
+          })
+          .finally(()=> {
+            setHabit({
+              userId: userId,
+              title: "",
+              description: "",
+              frequency: "",
+              icon: "",
+            })
+          })
+        }
+      } catch (error) {
+        
+      }
+    }
+
+    const editHabit = () => {}
+
   return (
     <div className="bg-gray-900 p-4 py-6 rounded-lg mt-1">
+      <Toaster/>
       {loading && (
         <h1 className="text-white font-bold text-center mb-4">Processing...</h1>
       )}
@@ -77,9 +123,12 @@ export default function HabitDialog({btnText, title, description, frequency, ico
       </div>
 
      <div className="flex gap-6 mt-4">
-        <Select className="">
+        <Select value={habit.frequency} onValueChange={(value)=> {
+          setHabit({...habit, frequency: value})
+        }}>
+          
             <SelectTrigger className="text-white">
-                <SelectValue placeholder="Habit Frequency"/>
+                <SelectValue  placeholder="Habit Frequency"/>
             </SelectTrigger>
             <SelectContent className="bg-gray-900 ml-8">
                 <SelectGroup className="bg-gray-900">
@@ -91,7 +140,9 @@ export default function HabitDialog({btnText, title, description, frequency, ico
             </SelectContent>
         </Select>
 
-        <Select className="">
+        <Select value={habit.icon} onValueChange={(value)=> {
+          setHabit({...habit, icon: value})
+        }}>
             <SelectTrigger className="text-white">
                 <SelectValue placeholder="Habit Icon"/>
             </SelectTrigger>
@@ -137,7 +188,9 @@ export default function HabitDialog({btnText, title, description, frequency, ico
         </Select>
       </div>
 
-      <Button  className="mt-4 w-full">
+
+        
+      <Button onClick={addNewHabit}  className="mt-4 w-full">
         {btnText}
       </Button>
     </div>

@@ -52,7 +52,8 @@ function Habits() {
   return (
     <div className='min-h-screen bg-black px-20 py-3'>
       <h1 className='text-white text-6xl uppercase font-bold text-center p-3 mb-6'>All Habits</h1>
-      <Card className="bg-gray-600 w-full max-w-md border-0">
+
+      <Card className="bg-gray-600 w-[50%] max-w-md border-0">
         <CardHeader>
           <div className='flex w-full justify-between px-2 items-start'>
             <div>
