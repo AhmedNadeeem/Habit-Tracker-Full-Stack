@@ -20,7 +20,6 @@ export default function DayCard({ dateProp }) {
 
     setWeekDates(temp);
 
-    console.log("Week dates: ", temp);
   }, [dateProp]);
 
   return (

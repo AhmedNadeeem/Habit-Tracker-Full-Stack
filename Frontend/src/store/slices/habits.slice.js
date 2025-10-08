@@ -1,48 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+let habitsData = localStorage.getItem("habitsData");
+
 const initialState = {
-  value: [],
+  value: habitsData ? JSON.parse(habitsData) : {}
 };
 
 export const habitSlice = createSlice({
   name: "habits",
   initialState,
   reducers: {
-    setHabits: (state, actions) => {
-      const allHabits = actions.payload;
-      const statefulHabits = allHabits.map((habit) => ({
-        ...habit,
-        status: false,
-      }));
-      state = [...statefulHabits];
+    setHabitsLength: (state, actions) => {
+      const habitsLength = actions.payload;
+      state.value = {
+        habits: habitsLength,
+        completed: 0,
+      }
+      localStorage.setItem("habitsData", JSON.stringify(state.value));
     },
-    addHabit: (state, actions) => {
-      const newHabit = actions.payload;
-      const statefullNewHabits = {
-        ...newHabit,
-        state: false,
-      };
-      state = state.push(newHabit);
+    completeHabit: (state) => {
+      state.value = {
+        ...state,
+        completed: state.completed + 1
+      }
+      localStorage.setItem("habitsData", JSON.stringify(state.value));
     },
-    updateHabit: (state, actions) => {
-      const updatedHabit = actions.payload;
-      const filteredHabits = state.filter(
-        (habit) => habit._id != updatedHabit._id
-      );
-      filteredHabits.push(updatedHabit);
-      state = [...filteredHabits];
-    },
-    deleteHabit: (state, actions) => {
-      const deleteHabitId = actions.payload;
-      const filteredHabits = state.filter(
-        (habit) => habit._id != deleteHabitId
-      );
-      state = [...filteredHabits];
+    uncompleteHabit: (state) => {
+      state.value = {
+        ...state,
+        completed: state.completed > 0 ? state.completed - 1 : 0
+      }
+      localStorage.setItem("habitsData", JSON.stringify(state.value));
     },
   },
 });
 
-export const { setHabits, addHabit, updateHabit, deleteHabit } =
+export const { setHabitsLength, completeHabit, uncompleteHabit } =
   habitSlice.actions;
 
 export default habitSlice.reducer;

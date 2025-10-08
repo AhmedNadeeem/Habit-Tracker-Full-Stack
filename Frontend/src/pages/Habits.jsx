@@ -104,7 +104,7 @@ export default function Habits() {
 
         {habits.length > 0 ? habits.map((habit) => (
       
-          <Card key={habit._id} className="bg-gray-600 mb-8 flex-1 min-w-[47%] max-w-md border-0">
+          <Card key={habit._id} className="bg-gray-500 mb-8 flex-1 min-w-[47%] max-w-md border-0">
             <CardHeader>
               <div className='flex w-full justify-between px-2 items-start'>
                 <div>
