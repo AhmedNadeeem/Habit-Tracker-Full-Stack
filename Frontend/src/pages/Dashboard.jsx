@@ -26,9 +26,9 @@ const colors = [
 ];
 
 export default function Dashboard() {
-  const [completedTasks, setCompletedTasks] = useState(0);
   const [progress, setProgress] = useState(0)
   const [habits, setHabits] = useState("");
+  const [completedHabits, setCompletedHabits] = useState("");
   const [todayDate, setTodayDate] = useState("");
   const userData = useSelector((state) => state.user.user);
   const userId = userData.user.userId;
@@ -91,16 +91,29 @@ export default function Dashboard() {
         console.log("finished");
       });
 
-      console.log("Habits data: ", habitsData)
-      setCompletedTasks(habitsData.completed)
+      axios.post("http://localhost:8000/api/v1/habits/progress/today", { userId })
+      .then((response)=>{
+        const compHabs = (response.data.completedHabits)
+        console.log(response.data.completedHabits)
+        setCompletedHabits(compHabs || 0)
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
+      .finally(()=>{})
 
-      console.log("Habits length: ", typeof(habitsData.habits))
-      console.log("Completed habits: ", typeof(habitsData.completed))
-      const prog = (habitsData.completed / habitsData.habits) * 100;
+      console.log("Habits data: ", habitsData)
+  }, [setHabits, setCompletedHabits, setTodayDate]);
+
+  useEffect(()=>{
+    
+      const habsLen = habits.length;
+      const comHabsLen = completedHabits
+      const prog = (comHabsLen / habsLen) * 100;
       console.log("Progress: ", prog)
 
       setProgress(prog); 
-  }, [setHabits, setCompletedTasks, setProgress]);
+  }, [setProgress, habits, completedHabits])
 
   return (
     <div className="text-4xl bg-black min-h-screen flex flex-col items-center py-8 px-6">
@@ -111,7 +124,7 @@ export default function Dashboard() {
       <div className="bg-gray-900 min-w-full flex justify-between px-15 py-10 mt-10 rounded-2xl">
         <div>
           <h2 className="font-bold text-white text-5xl">
-            Total Habits - {habits.length}
+            Completed Habits - {completedHabits}/{habits.length}
           </h2>
           <Progress value={progress} className="w-2xl flex-1 mt-4 h-6" />
         </div>
@@ -129,6 +142,8 @@ export default function Dashboard() {
         {habits &&
           habits.map((habit, index) => (
             <HabitCard
+              createdDate={habit.createdAt}
+              userId={habit.userId}
               id={habit._id}
               freq={habit.frequency}
               description={habit.description}

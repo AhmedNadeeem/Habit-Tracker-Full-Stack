@@ -6,6 +6,11 @@ const habitTrackSchema = new Schema({
         ref: "habit",
         required: true,
     },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: "habit",
+        required: true,
+    },
     date: {
         type: Date,
         requierd: true,
@@ -16,4 +21,6 @@ const habitTrackSchema = new Schema({
     }
 })
 
-module.exports = model("habitTrack", habitTrackSchema)
+const HabitTrack = model("habitTrack", habitTrackSchema);
+
+module.exports = HabitTrack;

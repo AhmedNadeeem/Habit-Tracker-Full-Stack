@@ -26,7 +26,7 @@ const getAllHabits = async (req,res)=> {
     if(!userId) return res.status(400).jsaon({ message: "Bad credentials. User Id is required!" })
     try {
         const allHabits = await Habit.find({ userId: userId });
-        console.log(allHabits);
+        // console.log(allHabits);
         return res.status(200).json({ message: "Got all habits!", habits: allHabits })
     } catch (error) {
         return res.status(500).json({ message : "Failed to get habits.", details: error })
@@ -76,26 +76,86 @@ const deleteHabit = async(req,res)=> {
     }
 }
 
+//-> Stats <-//
+
+const getTodaysStatus = async (req, res) => {
+    try {
+        const {habitId, userId} = req.body;
+        if(!habitId || !userId) return res.status(401).json({ message: "Bad creds! User, and post id required" });
+
+        const habitTodayStat = await HabitTrack.find({ habitId: habitId, userId: userId });
+        if(!habitTodayStat) return res.status(401).json({ message: "Habit status not completed!" });
+
+        const habitDate = habitTodayStat?.filter((habit)=> {
+            let tempHabitDate = habit.date;
+            tempHabitDate = new Date(tempHabitDate);
+            let today = new Date();
+            if(tempHabitDate.toDateString() === today.toDateString()){
+                return true;
+            } else {
+                return false;
+            }
+        })
+        if(habitDate.length > 0){
+            return res.status(200).json({ message: "Habit status found", habitTrack: habitTodayStat })
+        } 
+        
+        return res.status(204).json({ message: "Habit status not found" });
+    } catch (error) {
+        console.error(error, "\n\n")
+        return res.status(500).json({ message: "Failed to get habit stat", details: (error) })
+    }
+}
+
+const getTodayProgress = async (req, res) => {
+    try {
+        const {userId} = req.body;
+        if(!userId) return res.status(401).json({ message: "Bad creds! User id required" });
+
+        const unfilteredHabits = await HabitTrack.find({ userId: userId });
+        if(!unfilteredHabits) return res.status(401).json({ message: "Habit status not completed!" });
+
+        const filteredHabits = unfilteredHabits?.filter((habit)=> {
+            let tempHabitDate = habit.date;
+            tempHabitDate = new Date(tempHabitDate);
+            let today = new Date();
+            if(tempHabitDate.toDateString() === today.toDateString()){
+                return true;
+            } else {
+                return false;
+            }
+        }) 
+        
+        return res.status(200).json({ message: "Completed habits", completedHabits: filteredHabits.length });
+    } catch (error) {
+        console.error(error, "\n\n")
+        return res.status(500).json({ message: "Failed to get completed habits number", details: (error) })
+    }
+}
+
 const markHabitDone = async (req,res) => {
     try {
-        const habitId = req.params.hId;
-        if(!habitId) return res.status(401).json({ message: "Habit id required" });
+        const hId = req.params.hId;
+        if(!hId) return res.status(401).json({ message: "Habit id required" });
+        
+        const { date, status, userId } = req.body;
+        if(!date || !status || !userId) return res.status(401).json({ message: "Date, status, and userId required" });
 
-        const { date, status } = req.body;
-        if(!date || !status) return res.status(401).json({ message: "Date and status required" });
-
-        const habitTrackPrev = await HabitTrack.findOne({ habitId: habitId, date: date });
+        const habitTrackPrev = await HabitTrack.findOne({ habitId: hId, userId: userId, date: date });
         if(habitTrackPrev){
+            
             habitTrackPrev.status = status,
             habitTrackPrev.save();
-
+            
             return res.status(200).json({ message: "Habit status changed", updatedHabit: habitTrackPrev })
         } else {
             const newHabitTrack = await HabitTrack.create({
-                habitId: habitId,
+                habitId: hId,
+                userId: userId,
                 date: date,
                 status: status,
             });
+            console.log(newHabitTrack)
             return res.status(201).json({ message: "Habit track marked", habitTrack: newHabitTrack })
         }
 
@@ -118,4 +178,4 @@ const getHabitHistory = async (req,res)=> {
     }
 }
 
-module.exports = { createHabit, getAllHabits, getSingleHabit, updateHabit, deleteHabit, markHabitDone, getHabitHistory }
+module.exports = { createHabit, getAllHabits, getSingleHabit, updateHabit, deleteHabit, markHabitDone, getHabitHistory, getTodaysStatus, getTodayProgress }
