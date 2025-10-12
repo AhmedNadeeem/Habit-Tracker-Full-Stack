@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { createHabit, getAllHabits, getSingleHabit, updateHabit, deleteHabit, markHabitDone, getHabitHistory, getTodaysStatus, getTodayProgress } = require("../Controllers/habits.controllers");
+const { createHabit, getAllHabits, getSingleHabit, updateHabit, deleteHabit, markHabitDone, getHabitHistory, getTodaysStatus, getTodayProgress, getWeekProgress } = require("../Controllers/habits.controllers");
 
 const habitRouter = Router();
 
@@ -23,6 +23,8 @@ habitRouter.post("/today/stat", getTodaysStatus);
 habitRouter.post("/progress/today", getTodayProgress)
 
 habitRouter.post("/mark/:hId", markHabitDone);
+
+habitRouter.post("/progress/week", getWeekProgress)
 
 habitRouter.get("/history/:hId", getHabitHistory);
 

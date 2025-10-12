@@ -164,6 +164,32 @@ const markHabitDone = async (req,res) => {
     }
 }
 
+const getWeekProgress = async (req, res) => {
+    try {
+        const { userId, habitId, weekDates }  = req.body;
+        console.log(`User id: ${userId}, week dates: ${weekDates}`)
+        if(!userId || !habitId || !weekDates.length > 0) return res.status(400).json({ message: "User, habit id and week dates required" });
+
+        
+        const allStats = await HabitTrack.find({ userId, habitId });
+        if(!allStats) return res.status(400).json({ message: "Invalid user id" });
+
+        const weekStatsArr = weekDates.map((date) => {
+            const found = allStats.find((habit) => {
+                return new Date(habit.date).toDateString() === new Date(date).toDateString()
+            });
+            return found || { date: date, status: false }
+        })
+
+        console.log(weekStatsArr);
+        
+        res.status(200).json({ message: "Weekly stats found!", weeklyStat: weekStatsArr })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({ message: "Failed to get habit history", details: error })
+    }
+}
+
 const getHabitHistory = async (req,res)=> {
     try {
         const habitId = req.params.hId;
@@ -178,4 +204,4 @@ const getHabitHistory = async (req,res)=> {
     }
 }
 
-module.exports = { createHabit, getAllHabits, getSingleHabit, updateHabit, deleteHabit, markHabitDone, getHabitHistory, getTodaysStatus, getTodayProgress }
+module.exports = { createHabit, getAllHabits, getSingleHabit, updateHabit, deleteHabit, markHabitDone, getHabitHistory, getTodaysStatus, getTodayProgress, getWeekProgress }
