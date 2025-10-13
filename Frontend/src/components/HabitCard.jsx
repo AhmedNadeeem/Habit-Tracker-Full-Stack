@@ -13,7 +13,7 @@ import SocialIcon from "../assets/social.png"
 import SportsIcon from "../assets/sports.png"
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { completeHabit, uncompleteHabits } from "../store/slices/habits.slice"
+import { completeHabit } from "../store/slices/habits.slice"
 
 const icons = {
   idea: IdeaIcon,

@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast, Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [user, setUser] = useState({
@@ -13,7 +12,6 @@ export default function Register() {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const registerUser = () => {
     try {
@@ -31,7 +29,6 @@ export default function Register() {
           .then((response) => {
             const toastData = response.data.message;
             toast.success(toastData);
-            window.location.reload()
           })
           .catch((error) => {
             console.log("error: ", error.message);

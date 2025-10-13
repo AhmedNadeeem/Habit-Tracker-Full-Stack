@@ -121,18 +121,18 @@ export default function Dashboard() {
         <DayCard dateProp={todayDate} />
       </div>
 
-      <div className="bg-gray-900 min-w-full flex justify-between px-15 py-10 mt-10 rounded-2xl">
+      <div className="bg-gray-900 w-full max-sm:px-3 max-sm:py-8 max-sm:mt-8 flex justify-between px-15 py-10 mt-10 rounded-2xl">
         <div>
-          <h2 className="font-bold text-white text-5xl">
+          <h2 className="max-sm:text-2xl font-bold text-white text-5xl">
             Completed Habits - {completedHabits}/{habits.length}
           </h2>
-          <Progress value={progress} className="w-2xl flex-1 mt-4 h-6" />
+          <Progress value={progress} className="w-[80%] flex-1 mt-4 h-6" />
         </div>
         <div>
-          <h2 className="font-bold text-white text-5xl">
+          <h2 className="max-sm:text-2xl font-bold text-white text-5xl">
             {progress}/100%
           </h2>
-          <p className="uppercase text-white font-thin tracking-wider">
+          <p className="max-sm:text-2xl uppercase text-white font-thin tracking-wider">
             Completed
           </p>
         </div>
