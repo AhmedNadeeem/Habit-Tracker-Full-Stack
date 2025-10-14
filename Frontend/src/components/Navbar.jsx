@@ -20,7 +20,6 @@ import HabitDialog from "./HabitDialog";
 
 function Navbar() {
   const user = useSelector(state => state.user.user);
-  console.log(user)
   const navigate = useNavigate();
   
   const logoutUser = () => {
@@ -29,25 +28,25 @@ function Navbar() {
   }
   
   return (
-    <div className="max-w-ful flex justify-center items-center py-2 bg-gray-900">
+    <div className="max-w-ful flex justify-center items-center py-3 bg-gray-900">
     <NavigationMenu>
       <NavigationMenuList>
 
         <NavigationMenuItem>
             <NavigationMenuLink>
-              <Link className="max-sm:text-xs max-sm:px-1 md:text-lg px-2 font-normal text-white" to="/">Home</Link>
+              <Link className="max-sm:text-xs max-sm:px-0 md:text-lg px-2 font-normal text-white" to="/">Home</Link>
             </NavigationMenuLink>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
             <NavigationMenuLink>
-              <Link className="max-sm:text-xs md:text-lg px-2 font-normal text-white" to="/habits">All Habits</Link>
+              <Link className="max-sm:text-xs max-sm:px-0 md:text-lg px-2 font-normal text-white" to="/habits">All Habits</Link>
             </NavigationMenuLink>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
             <NavigationMenuLink>
-              <Link className="max-sm:text-xs md:text-lg px-2 font-normal text-white" to="/stats">Stats</Link>
+              <Link className="max-sm:text-xs max-sm:px-0 md:text-lg px-2 font-normal text-white" to="/stats">Stats</Link>
             </NavigationMenuLink>
         </NavigationMenuItem>
 
@@ -57,7 +56,7 @@ function Navbar() {
           <>
           <NavigationMenuItem>
             <NavigationMenuLink>
-              <NavLink className="max-sm:text-xs md:text-lg px-2 font-normal text-white" to="/auth/register">Register/Login</NavLink>
+              <NavLink className="max-sm:text-xs max-sm:px-0 md:text-lg  px-2 font-normal text-white" to="/auth/register">Register/Login</NavLink>
             </NavigationMenuLink>
           </NavigationMenuItem>
           </>
@@ -70,7 +69,7 @@ function Navbar() {
           <NavigationMenuItem>
               <NavigationMenuLink>
                 <Dialog>
-                  <DialogTrigger className="text-white max-sm:text-xs cursor-pointer py-1 md:text-lg">New Habits</DialogTrigger>
+                  <DialogTrigger className="text-white w-full flex-1 max-sm:text-xs max-sm:py-0 cursor-pointer py-1 md:text-lg">New Habits</DialogTrigger>
                   <DialogContent className="bg-gray-500 border-0">
                     <DialogHeader>
                       <DialogTitle>New habit:</DialogTitle>
@@ -83,7 +82,7 @@ function Navbar() {
           
           <NavigationMenuItem>
               <NavigationMenuLink>
-                <button onClick={logoutUser} className="max-sm:text-xs md:text-lg px-2 font-normal text-white hover:cursor-pointer">Logout</button>
+                <button onClick={logoutUser} className="max-sm:text-xs max-sm:px-0 md:text-lg px-2 font-normal text-white hover:cursor-pointer">Logout</button>
               </NavigationMenuLink>
           </NavigationMenuItem>
 

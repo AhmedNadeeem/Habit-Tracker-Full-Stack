@@ -55,27 +55,20 @@ export default function Habits() {
     const userId = userData?.user["userId"];
     axios.get(`http://localhost:8000/api/v1/habits/all/${userId}`)
     .then((response)=> {
-      console.log(response.data.habits);
       setHabits(response.data.habits);
-      console.log(habits);
 
     })
     .catch((error)=>{
       console.error(error);
       setHabits(false);
     })
-    .finally(()=> {
-      console.log("Finished")
-    })
   }, [setHabits])
 
   const deleteHabit = (habitId) => {
-    console.log(habitId)
     try {
       if(habitId.length > 0 ){
         axios.delete(`http://localhost:8000/api/v1/habits/delete/${habitId}`)
         .then((response)=> {
-          console.log(response.data.message)
           const msg = (response.data.message)
           toast.success(msg)
         })
@@ -83,7 +76,6 @@ export default function Habits() {
           console.error(error)
         })
         .finally(()=> {
-          console.log("Finished")
           setTimeout(()=> 
             window.location.reload()
           , 1500)

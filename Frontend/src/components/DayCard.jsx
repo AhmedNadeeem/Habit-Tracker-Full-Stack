@@ -27,8 +27,9 @@ export default function DayCard({ dateProp }) {
       {weekDates.map((date) =>
         date == dateProp ? (
           <div
+            key={date}
             className={`bg-[#ff9100] max-sm:w-10 max-sm:h-16 max-md:w-16 max-md:h-22 w-20 h-25 flex flex-col justify-center items-center rounded-lg`}
-          >
+            >
             <p className={`max-sm:text-lg max-md:text-xl text-2xl font-bold text-black`}>
               {date.split(" ")[2]}
             </p>
@@ -36,6 +37,7 @@ export default function DayCard({ dateProp }) {
           </div>
         ) : (
           <div
+            key={date}
             className={`bg-gray-900 max-sm:w-10 max-sm:h-16 max-md:w-16 max-md:h-22 w-20 h-25 flex flex-col justify-center items-center rounded-lg`}
           >
             <p className={`max-sm:text-lg max-md:text-xl text-2xl font-bold text-gray-400`}>

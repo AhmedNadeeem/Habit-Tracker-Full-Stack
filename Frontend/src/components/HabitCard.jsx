@@ -30,7 +30,7 @@ const icons = {
 }
 
 
-export default function HabitCard({icon, userId, createdDate ,id, freq, description, title, bg}) {
+export default function HabitCard({icon, userId, id, freq, description, title, bg}) {
     const [status, setStatus] = useState(false);
     const dispatch = useDispatch()
 
@@ -43,18 +43,17 @@ export default function HabitCard({icon, userId, createdDate ,id, freq, descript
       try {
       axios.post("http://localhost:8000/api/v1/habits/today/stat", payload)
       .then((response)=>{
-        console.log(response.status)
         const resCode = (response.status)
         if(resCode == 200) {
           setStatus(true);
         }
       })
       .catch((error)=>{
-        console.log(error)
+        console.error(error)
       })
       .finally(()=>{})
       } catch (error) {
-        console.log(error) 
+        console.error(error) 
       }
     }, [setStatus])
     
@@ -67,7 +66,6 @@ export default function HabitCard({icon, userId, createdDate ,id, freq, descript
         }
         axios.post(`http://localhost:8000/api/v1/habits/mark/${id}`, payload)
         .then((response)=>{
-          console.log(response)
           setStatus(!status);
           dispatch(completeHabit())
           window.location.reload();
@@ -77,7 +75,7 @@ export default function HabitCard({icon, userId, createdDate ,id, freq, descript
         })
         .finally(()=>{})
       } catch (error) {
-        console.log(error) 
+        console.error(error) 
       }
     }
 

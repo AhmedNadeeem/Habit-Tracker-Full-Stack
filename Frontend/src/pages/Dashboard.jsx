@@ -44,7 +44,6 @@ export default function Dashboard() {
     axios
       .get(`http://localhost:8000/api/v1/habits/all/${userId}`)
       .then((response) => {
-        console.log(response.data.habits);
         const res = response.data.habits;
 
         const filteredHabits = res.filter((habit) => {
@@ -87,22 +86,17 @@ export default function Dashboard() {
         console.error(error);
         setHabits(false);
       })
-      .finally(() => {
-        console.log("finished");
-      });
 
       axios.post("http://localhost:8000/api/v1/habits/progress/today", { userId })
       .then((response)=>{
         const compHabs = (response.data.completedHabits)
-        console.log(response.data.completedHabits)
         setCompletedHabits(compHabs || 0)
       })
       .catch((error)=>{
-        console.log(error)
+        console.error(error)
       })
       .finally(()=>{})
 
-      console.log("Habits data: ", habitsData)
   }, [setHabits, setCompletedHabits, setTodayDate]);
 
   useEffect(()=>{
@@ -110,18 +104,17 @@ export default function Dashboard() {
       const habsLen = habits.length;
       const comHabsLen = completedHabits
       const prog = (comHabsLen / habsLen) * 100;
-      console.log("Progress: ", prog)
 
       setProgress(prog); 
   }, [setProgress, habits, completedHabits])
 
   return (
     <div className="text-4xl bg-black min-h-screen flex flex-col items-center py-8 px-6">
-      <span className="w-full">
+      <span className="w-full lg:w-[90%]">
         <DayCard dateProp={todayDate} />
       </span>
 
-      <div className="bg-gray-900 w-full max-sm:px-4 max-sm:py-6 max-sm:mt-8 flex justify-between px-15 py-10 mt-10 rounded-2xl">
+      <div className="bg-gray-900 w-[90%] max-sm:px-4 max-sm:py-6 max-sm:mt-8 flex justify-between px-15 py-10 mt-10 rounded-2xl">
         <div className="flex-1 max-sm:w-[50%]">
           <h2 className="max-sm:text-xl max-md:text-3xl max-lg:text-4xl font-bold text-white text-5xl">
             Progress - {completedHabits}/{habits.length}
@@ -138,11 +131,10 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="mt-10 px-20 max-sm:px-8 w-full flex justify-between items-center flex-wrap">
+      <div className="mt-10 px-25 max-sm:px-8 w-full flex justify-between items-center flex-wrap">
         {habits &&
           habits.map((habit, index) => (
             <HabitCard
-              createdDate={habit.createdAt}
               userId={habit.userId}
               id={habit._id}
               freq={habit.frequency}

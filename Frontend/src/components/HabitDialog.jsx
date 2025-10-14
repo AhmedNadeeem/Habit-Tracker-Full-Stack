@@ -98,7 +98,6 @@ export default function HabitDialog({btnText, title, description, frequency, ico
           .then((response) => {
             setLoading(true);
             const msg = response.data.message;
-            console.log(msg);
             toast.success(msg)
 
           })

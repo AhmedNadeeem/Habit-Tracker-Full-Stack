@@ -31,15 +31,13 @@ export default function Register() {
             toast.success(toastData);
           })
           .catch((error) => {
-            console.log("error: ", error.message);
+            console.error("error: ", error.message);
             toast.error(error.message);
           })
           .finally(() => {
             setUser({ email: "", password: "" });
             setLoading(false);
           });
-      } else {
-        console.log("Bad creds");
       }
     } catch (error) {
       console.error(error);
