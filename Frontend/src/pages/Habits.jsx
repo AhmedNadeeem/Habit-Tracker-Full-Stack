@@ -96,28 +96,28 @@ export default function Habits() {
   }
 
   return (
-    <div className='min-h-screen bg-black px-20 py-3'>
+    <div className='min-h-screen bg-black max-sm:px-10 max-md:px-12 px-20 py-3'>
       <Toaster />
-      <h1 className='text-white text-6xl uppercase font-bold text-center p-3 mb-6'>All Habits</h1>
+      <h1 className='text-white max-sm:text-2xl max-md:text-3xl max-lg:text-4xl text-6xl uppercase font-bold text-center p-3 mb-6'>All Habits</h1>
 
       <div className='flex justify-between flex-wrap items-center'>
 
         {habits.length > 0 ? habits.map((habit) => (
       
-          <Card key={habit._id} className="bg-gray-500 mb-8 flex-1 min-w-[47%] max-w-md border-0">
+          <Card key={habit._id} className="bg-gray-500 mb-8 w-[49%] max-sm:mb-4 max-md:mb-6 max-md:w-full max-sm:w-full max-lg:w-full border-0">
             <CardHeader>
               <div className='flex w-full justify-between px-2 items-start'>
                 <div>
-                  <CardTitle className="text-black text-lg font-bold mt-1">{habit.title}</CardTitle>
-                  <CardDescription className="text-gray-900 text-lg">{habit.description} | {habit.frequency}</CardDescription>
+                  <CardTitle className="text-black text-lg max-sm:text-md font-bold">{habit.title}</CardTitle>
+                  <CardDescription className="text-gray-900 text-lg max-sm:text-sm">{habit.description} | {habit.frequency}</CardDescription>
                 </div>
-                <img className='w-10' src={icons[habit.icon]} alt="Habit icon" />
+                <img className='w-10 max-sm:w-8' src={icons[habit.icon]} alt="Habit icon" />
               </div>
             </CardHeader>
-            <CardFooter className="flex flex-col gap-2">
+            <CardFooter className="flex flex-col max-sm:flex-row max-md:flex-row max-lg:flex-row gap-2">
 
               <Dialog>
-                <DialogTrigger className="bg-[#ff9100] hover:bg-[#dd7e00] w-full py-2 border-0 rounded-lg cursor-pointer">Edit</DialogTrigger>
+                <DialogTrigger className="bg-[#ff9100] hover:bg-[#dd7e00] flex-1 w-full py-2 border-0 rounded-lg cursor-pointer">Edit</DialogTrigger>
                 <DialogContent className="bg-gray-500 border-0">
                   <DialogHeader>
                     <DialogTitle>Edit habit:</DialogTitle>
@@ -126,7 +126,7 @@ export default function Habits() {
                 </DialogContent>
               </Dialog>
 
-              <Button onClick={()=> deleteHabit(habit._id)} className="w-full text-white bg-gray-800 hover:bg-gray-900 cursor-pointer">
+              <Button onClick={()=> deleteHabit(habit._id)} className="flex-1 w-full text-white bg-gray-800 hover:bg-gray-900 cursor-pointer">
                 Delete
               </Button>
             </CardFooter>
