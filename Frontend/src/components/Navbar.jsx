@@ -35,19 +35,19 @@ function Navbar() {
 
         <NavigationMenuItem>
             <NavigationMenuLink>
-              <Link className="max-sm:text-sm max-sm:px-1 md:text-lg px-2 font-normal text-white" to="/">Home</Link>
+              <Link className="max-sm:text-xs max-sm:px-1 md:text-lg px-2 font-normal text-white" to="/">Home</Link>
             </NavigationMenuLink>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
             <NavigationMenuLink>
-              <Link className="max-sm:text-sm md:text-lg px-2 font-normal text-white" to="/habits">All Habits</Link>
+              <Link className="max-sm:text-xs md:text-lg px-2 font-normal text-white" to="/habits">All Habits</Link>
             </NavigationMenuLink>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
             <NavigationMenuLink>
-              <Link className="md:text-lg px-2 font-normal text-white" to="/stats">Stats</Link>
+              <Link className="max-sm:text-xs md:text-lg px-2 font-normal text-white" to="/stats">Stats</Link>
             </NavigationMenuLink>
         </NavigationMenuItem>
 
@@ -57,7 +57,7 @@ function Navbar() {
           <>
           <NavigationMenuItem>
             <NavigationMenuLink>
-              <NavLink className="md:text-lg px-2 font-normal text-white" to="/auth/register">Register/Login</NavLink>
+              <NavLink className="max-sm:text-xs md:text-lg px-2 font-normal text-white" to="/auth/register">Register/Login</NavLink>
             </NavigationMenuLink>
           </NavigationMenuItem>
           </>
@@ -70,7 +70,7 @@ function Navbar() {
           <NavigationMenuItem>
               <NavigationMenuLink>
                 <Dialog>
-                  <DialogTrigger className="text-white max-sm:text-sm cursor-pointer py-1 text-lg">New Habits</DialogTrigger>
+                  <DialogTrigger className="text-white max-sm:text-xs cursor-pointer py-1 md:text-lg">New Habits</DialogTrigger>
                   <DialogContent className="bg-gray-500 border-0">
                     <DialogHeader>
                       <DialogTitle>New habit:</DialogTitle>
@@ -83,16 +83,16 @@ function Navbar() {
           
           <NavigationMenuItem>
               <NavigationMenuLink>
-                <button onClick={logoutUser} className="max-sm:text-sm md:text-lg px-2 font-normal text-white hover:cursor-pointer">Logout</button>
+                <button onClick={logoutUser} className="max-sm:text-xs md:text-lg px-2 font-normal text-white hover:cursor-pointer">Logout</button>
               </NavigationMenuLink>
           </NavigationMenuItem>
 
-          <div className="max-sm:hidden flex items-center px-4 py-1 gap-4 border-1 rounded-2xl">
+          <div className="max-sm:hidden flex items-center max-md:px-2 px-4 py-1 gap-4 border-1 rounded-2xl">
             <div>
-              <p className="text-white text-sm">{user?.user?.username}</p>
-              <p className="text-white text-xs font-thin">{user?.user?.email.slice(0, 8)}...</p>
+              <p className="text-white max-md:text-xs text-sm">{user?.user?.username}</p>
+              <p className="text-white text-xs max-md:text-xs font-thin">{user?.user?.email.slice(0, 8)}...</p>
             </div>
-            <img className="w-8 h-8 border-gray-500 border-2 rounded-4xl" src={UserImg} />
+            <img className="max-md:w-6 max-md:h-6 max-md:border-1 w-8 h-8 border-gray-500 border-2 rounded-4xl" src={UserImg} />
           </div>
 
         </span>

@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 function Footer() {
   return (
     <footer className="bg-gray-900">
-      <div className="flex items-center justify-center gap-4 mb-4 pt-12">
+      <div className="flex items-center justify-center gap-4 mb-4 pt-12 max-sm:pt-8">
         <Link to={"https://www.facebook.com/share/15r77G11e4/"}>
           <img
             className="max-sm:w-8 w-10 bg-white rounded-xl p-1  hover:p-1.5 cursor-pointer"
@@ -53,7 +53,7 @@ function Footer() {
         </Link>
       </div>
 
-      <div className="flex gap-4 justify-center items-center pb-12">
+      <div className="flex gap-4 justify-center items-center pb-12 max-sm:pb-4">
         <Link
           className="max-sm:text-sm text-white font-thin hover:underline hover:text-[#ff9100]"
           to="/"

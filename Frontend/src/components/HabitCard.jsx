@@ -82,15 +82,15 @@ export default function HabitCard({icon, userId, createdDate ,id, freq, descript
     }
 
   return (
-    <div key={id} className={`flex gap-12 px-8 py-6 w-[45%]  ${status ? "opacity-50" : ""} justify-between rounded-2xl items-center ${bg ? bg : "bg-red-200"} mb-10 `}>
-          <div>
-            <div className='flex items-center gap-4'>
-              <img className='w-8' src={ icons[icon] }/>
-              <p className={`text-2xl font-bold uppercase ${status ? "line-through" : ""}`}>{title || "Reading"}</p>
+    <div key={id} className={`flex w-[49%] max-sm:w-lg max-sm:mb-5 max-md:mb-5 max-md:w-xl max-sm:px-4 justify-between px-8 py-6  ${status ? "opacity-50" : ""} justify-between rounded-2xl items-center ${bg ? bg : "bg-red-200"} mb-10 `}>
+          <div className='flex-1'>
+            <div className='flex items-center gap-4 max-sm:gap-2'>
+              <img className='w-8 max-sm:w-6 max-lg:w-6' src={ icons[icon] }/>
+              <p className={`text-2xl max-lg:text-xl max-sm:text-lg font-bold uppercase ${status ? "line-through" : ""}`}>{title || "Reading"}</p>
             </div>
-              <p className={`font-thin text-lg ${status ? "line-through" : ""}`}>{description} | {freq}</p>
+              <p className={`font-thin text-lg max-sm:text-xs max-lg:text-sm ${status ? "line-through" : ""}`}>{description} | {freq}</p>
           </div>
-            <Checkbox id="checkbox" disabled={status} checked={status} onClick={completeHabitBtn} className="w-10 h-10 rounded-2xl" />
+            <Checkbox id="checkbox" disabled={status} checked={status} onClick={completeHabitBtn} className="max-sm:w-8 max-sm:h-8 w-10 h-10 rounded-2xl" />
         </div>
   )
 }

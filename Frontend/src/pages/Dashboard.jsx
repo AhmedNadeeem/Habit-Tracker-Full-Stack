@@ -117,28 +117,28 @@ export default function Dashboard() {
 
   return (
     <div className="text-4xl bg-black min-h-screen flex flex-col items-center py-8 px-6">
-      <div>
+      <span className="w-full">
         <DayCard dateProp={todayDate} />
-      </div>
+      </span>
 
-      <div className="bg-gray-900 w-full max-sm:px-3 max-sm:py-8 max-sm:mt-8 flex justify-between px-15 py-10 mt-10 rounded-2xl">
-        <div>
-          <h2 className="max-sm:text-2xl font-bold text-white text-5xl">
-            Completed Habits - {completedHabits}/{habits.length}
+      <div className="bg-gray-900 w-full max-sm:px-4 max-sm:py-6 max-sm:mt-8 flex justify-between px-15 py-10 mt-10 rounded-2xl">
+        <div className="flex-1 max-sm:w-[50%]">
+          <h2 className="max-sm:text-xl max-md:text-3xl max-lg:text-4xl font-bold text-white text-5xl">
+            Progress - {completedHabits}/{habits.length}
           </h2>
-          <Progress value={progress} className="w-[80%] flex-1 mt-4 h-6" />
+          <Progress value={progress} className="w-[90%] mt-4 h-6" />
         </div>
-        <div>
-          <h2 className="max-sm:text-2xl font-bold text-white text-5xl">
+        <div className="flex flex-col items-end justify-center">
+          <h2 className="max-sm:text-xl max-md:text-3xl max-lg:text-4xl font-bold text-white text-5xl">
             {progress}/100%
           </h2>
-          <p className="max-sm:text-2xl uppercase text-white font-thin tracking-wider">
+          <p className="max-sm:text-lg max-md:text-2xl max-lg:text-3xl uppercase text-white font-thin tracking-wider">
             Completed
           </p>
         </div>
       </div>
 
-      <div className="mt-10 px-20 w-[90%]      mx-auto flex justify-between items-center flex-wrap">
+      <div className="mt-10 px-20 max-sm:px-8 w-full flex justify-between items-center flex-wrap">
         {habits &&
           habits.map((habit, index) => (
             <HabitCard
