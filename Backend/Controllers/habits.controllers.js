@@ -8,9 +8,7 @@ const createHabit = async (req,res)=> {
         console.error(errors)
         return res.status(400).json({ message: "Bad credentials.", details: errors});
     }
-    console.log(values);
     const { userId, title, frequency, icon, description } = values;
-    console.log(`Id: ${userId}, Title: ${title}, description: ${description}, Freq: ${frequency}, icon: ${icon}`);
     try {
         const newHabit = await Habit.create({
             userId, title, description, frequency, icon
@@ -26,7 +24,6 @@ const getAllHabits = async (req,res)=> {
     if(!userId) return res.status(400).jsaon({ message: "Bad credentials. User Id is required!" })
     try {
         const allHabits = await Habit.find({ userId: userId });
-        // console.log(allHabits);
         return res.status(200).json({ message: "Got all habits!", habits: allHabits })
     } catch (error) {
         return res.status(500).json({ message : "Failed to get habits.", details: error })
@@ -155,7 +152,6 @@ const markHabitDone = async (req,res) => {
                 date: date,
                 status: status,
             });
-            console.log(newHabitTrack)
             return res.status(201).json({ message: "Habit track marked", habitTrack: newHabitTrack })
         }
 
@@ -167,7 +163,6 @@ const markHabitDone = async (req,res) => {
 const getWeekProgress = async (req, res) => {
     try {
         const { userId, habitId, weekDates }  = req.body;
-        console.log(`User id: ${userId}, week dates: ${weekDates}`)
         if(!userId || !habitId || !weekDates.length > 0) return res.status(400).json({ message: "User, habit id and week dates required" });
 
         
@@ -181,8 +176,6 @@ const getWeekProgress = async (req, res) => {
             return found || { date: date, status: false }
         })
 
-        console.log(weekStatsArr);
-        
         res.status(200).json({ message: "Weekly stats found!", weeklyStat: weekStatsArr })
     } catch (error) {
         console.error(error)

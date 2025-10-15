@@ -4,6 +4,7 @@ const userRouter = require("./Routes/user.routes");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const logger = require("./Middlewares/logs.middleware")
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(logger)
 
 app.use("/api/v1/auth/", userRouter);
 app.use("/api/v1/habits/", habitRouter);

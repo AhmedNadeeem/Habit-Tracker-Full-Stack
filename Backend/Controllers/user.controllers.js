@@ -8,11 +8,10 @@ const { generateAccessToken, generateRefreshToken, verifyAccessToken, verifyRefr
 const registerUser = async (req, res) => {
   const { values, errors } = await validateUserRegister(req.body);
   if (errors) {
-    console.log(errors);
+    console.error(errors);
     return res.status(400).json({ error: "Bad credentials!", details: errors });
   } else {
     const { username, email, password } = values;
-    console.log(`name: ${username}, email: ${email}, pass: ${password}`);
     try {
       await User.create({
         username: username,
@@ -31,7 +30,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const { values, errors } = await validateUserLogin(req.body);
   if (errors) {
-    console.log(errors);
+    console.error(errors);
     return res.status(400).json({ error: "Bad credentials!", details: errors });
   } else {
     const { email, password } = values;

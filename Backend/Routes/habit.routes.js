@@ -15,8 +15,6 @@ habitRouter.put("/update", updateHabit);
 habitRouter.delete("/delete/:hId", deleteHabit);
 
 // Habits Tracking routes
-// Get habits today status
-// habitRouter.get("/status/:date", getHabitStatus);
 
 habitRouter.post("/today/stat", getTodaysStatus);
 
